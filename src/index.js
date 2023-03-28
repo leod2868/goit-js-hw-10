@@ -15,18 +15,36 @@ refs.searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 function onSearch(e) {
 
  searchQuery = e.target.value.trim()
- onClean();
- fetchCountries(searchQuery).then(renderCountries)
-
+    onClean();
+    if (searchQuery !== '') {
+        fetchCountries(searchQuery).then(renderCountries)
+    }
 
 }
 
 
 
 
-function renderCountries(countries) { 
-    
+function renderCountries(countries) {
+    if (countries.length > 10) {
+        Notiflix.Notify.info('Too many matches found. Please enter a more specific name');
+        return
+    } else if (countries.length === 0) {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+        return
+    } else if (countries.length >= 2 && countries.length <= 10) {
+        renderCountriesList();
+    } else if (countries.length === 1) {
+        renderCountry()
+    };
+}   
 
+function renderCountriesList(countries) {}  
+
+
+
+
+function renderCountry(countries) {}
 
 
 
@@ -50,5 +68,5 @@ function onClean() {
 
 
 
-}
+
 
