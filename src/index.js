@@ -43,7 +43,7 @@ function renderCountries(countries) {
 function renderCountriesList(countries) {
 
     const markupList = countries.map(({ name, flags }) => {
-        return `<li><img src='${flags.svg}' alt='${flags.alt}' width='50'>${name.offical}</li>`
+        return `<li><img src='${flags.svg}' alt='${flags.alt}' width='50'>${name.official}</li>`
     }).join('');
     refs.countryList.insertAdjacentHTML('beforeend', markupList);
 };  
@@ -53,8 +53,8 @@ function renderCountry(countries) {
 
     const markupInfo = countries.map(({ name, capital, population, flags, languages }) => {
 
-        return `<img src='${flags.svg}' alt='${name.offical}' width='70'>
-                <h1>${name.offical}</h1>
+        return `<img src='${flags.svg}' alt='${name.official}' width='70'>
+                <h1>${name.official}</h1>
                 <p>Capital: ${capital}</p>
                 <p>Population: ${population}</p>
                 <p>Languages: ${Object.values(languages)}</p>`
