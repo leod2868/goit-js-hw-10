@@ -29,10 +29,10 @@ function onSearch(e) {
 function renderCountries(countries) {
     if (countries.length > 10) {
         Notiflix.Notify.info('Too many matches found. Please enter a more specific name');
-        
+        return
     } else if (countries.length === 0) {
         Notiflix.Notify.failure('Oops, there is no country with that name');
-        
+        return
     } else if (countries.length >= 2 && countries.length <= 10) {
         renderCountriesList(countries);
     } else if (countries.length === 1) {
