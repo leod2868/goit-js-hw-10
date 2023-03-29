@@ -9,16 +9,18 @@ const refs = {
     countryList : document.querySelector('.country-list'),
     countryInfo : document.querySelector('.country-info'),
 }
-let searchQuery = ''
+
 refs.searchBox.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch(e) {
 
- searchQuery = e.target.value.trim()
+   const searchQuery = e.target.value.trim()
     onClean();
     if (searchQuery !== '') {
-        fetchCountries(searchQuery).then(renderCountries)
-    }
+        fetchCountries(searchQuery).then(renderCountries).catch(error => {
+            console.error(error)
+        });
+        }
 
 }
 
@@ -33,19 +35,33 @@ function renderCountries(countries) {
         Notiflix.Notify.failure('Oops, there is no country with that name');
         return
     } else if (countries.length >= 2 && countries.length <= 10) {
-        renderCountriesList();
+        renderCountriesList(countries);
     } else if (countries.length === 1) {
-        renderCountry()
+        renderCountry(countries)
     };
 }   
 
-function renderCountriesList(countries) {}  
+function renderCountriesList(countries) {
+
+    const markupList = countries.map(({ name, flags }) => {
+        return `<li><img src='${flags.svg}' alt='${flags.alt}' width='50'>${name.offical}</li>`
+    }).join('');
+    refs.countryList.insertAdjacentHTML('beforeend', markupList);
+};  
 
 
+function renderCountry(countries) {
 
+    const markupInfo = countries.map(({ name, capital, population, flags, languages }) => {
 
-function renderCountry(countries) {}
-
+        return `<img src='${flags.svg}' alt='${name.offical}' width='70'>
+                <h1>${name.offical}</h1>
+                <p>Capital: ${capital}</p>
+                <p>Population: ${population}</p>
+                <p>Languages: ${Object.values(languages)}</p>`
+    }).join('');
+    refs.countryInfo.insertAdjacentHTML('beforeend', markupInfo);
+};
 
 
 
