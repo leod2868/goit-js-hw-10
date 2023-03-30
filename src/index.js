@@ -18,7 +18,7 @@ function onSearch(e) {
     onClean();
     if (searchQuery !== '') {
         fetchCountries(searchQuery).then(renderCountries).catch(error => {
-            console.error(error)
+             Notiflix.Notify.failure('Oops, there is no country with that name');
         });
         }
 
